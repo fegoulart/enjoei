@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Enjoei</string>
     <string name="loading">carregando</string>
+    <string name="product_image">Imagem do produto</string>
+    <string name="available">à venda</string>
+    <string name="sold">vendidos</string>
+    <string name="back">voltar</string>
 </resources>

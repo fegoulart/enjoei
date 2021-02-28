@@ -80,6 +80,7 @@ class ListingFragment : Fragment(), ListingAdClickListener {
     }
 
     private fun setupToolbar() {
+        //FIXME Implement toolbar
 //        val appBarConfiguration = AppBarConfiguration(
 //            setOf(
 //                R.id.listingFragment
