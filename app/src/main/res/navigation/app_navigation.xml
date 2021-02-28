@@ -9,5 +9,18 @@
         android:id="@+id/listingFragment"
         android:name="com.leapi.enjoei.view.ListingFragment"
         android:label="listing_fragment"
-        tools:layout="@layout/listing_fragment" />
+        tools:layout="@layout/listing_fragment" >
+        <action
+            android:id="@+id/action_listingFragment_to_adDetailFragment"
+            app:destination="@id/adDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adDetailFragment"
+        android:name="com.leapi.enjoei.view.AdDetailFragment"
+        android:label="ad_detail_fragment"
+        tools:layout="@layout/ad_detail_fragment" >
+        <argument
+            android:name="selectedEdge"
+            app:argType="com.leapi.enjoei.model.SearchEdge" />
+    </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'jacoco'
     id 'androidx.navigation.safeargs.kotlin'
@@ -39,8 +40,13 @@ android {
 
         debug {
             testCoverageEnabled true
-            buildConfigField "String", "BACKEND_URL", '"https://dev-api.checkoff.com.br/api/v1/"'
+            buildConfigField "String", "SEARCH_URL", '"https://enjusearch.enjoei.com.br/"'
+            buildConfigField "String", "IMAGE_URL", '"https://photos.enjoei.com.br/public/"'
+            buildConfigField "String", "PRICING_URL", '"https://www.enjoei.com.br/api/v5/products/"'
+            buildConfigField "String", "STORE_URL", '"https://www.enjoei.com.br/api/v3/stores/"'
+
             debuggable true
+
         }
     }
     compileOptions {
@@ -94,8 +100,14 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    api "com.google.dagger:dagger:$daggerVersion"
+    api "com.google.dagger:dagger-android:$daggerVersion"
+    api "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
+
     implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$retrofitRxJava3AdapterVersion"
     implementation "com.google.code.gson:gson:$gsonVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
