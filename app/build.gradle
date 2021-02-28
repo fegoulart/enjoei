@@ -1,0 +1,165 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'jacoco'
+    id 'androidx.navigation.safeargs.kotlin'
+
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.leapi.enjoei"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 100
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BACKEND_URL", '"https://dev-api.checkoff.com.br/api/v1/"'
+            //https://enjusearch.enjoei.com.br/graphql-search-x?first=40&operation_name=searchProductsForStore&owner_id=7040410&query_id=0b085f0bd444d9a7e327e5a658194975&seller_id=10655653&term=
+            //https://enjusearch.enjoei.com.br/graphql-search-x?city=medianeira&experienced_seller=true&first=30&operation_name=searchProducts&query_id=c979e1f7f6478dabdf28c571789010d3&shipping_range=near_regions&state=pr&term=star-wars
+        }
+
+        debug {
+            testCoverageEnabled true
+            buildConfigField "String", "BACKEND_URL", '"https://dev-api.checkoff.com.br/api/v1/"'
+            debuggable true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+        incremental = false
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.returnDefaultValues = true
+    }
+}
+
+def lifecycle_version = "2.3.0"
+def supportVersion = '28.0.0'
+def retrofitVersion = '2.9.0'
+def glideVersion = '4.11.0'
+def rxAndroidVersion = '3.0.0'
+def preferencesVersion = '1.1.1'
+def daggerVersion = '2.28.3'
+def mockitoVersion = '3.3.3'
+def retrofitRxJava3AdapterVersion = '3.0.0'
+def gsonVersion = "2.8.6"
+def fragmentVersion = "1.3.0"
+def activityVersion = "1.2.0"
+def legacyVersion = "1.0.0"
+def coroutinesVersion = "1.3.7"
+def constraintLayoutVersion = "2.0.4"
+def appCompatVersion = "1.2.0"
+def viewPagerVersion = "1.0.0"
+def materialVersion = "1.3.0"
+def coreVersion = "1.3.2"
+
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$coreVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+
+    kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$retrofitRxJava3AdapterVersion"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+    implementation "androidx.activity:activity-ktx:$activityVersion"
+
+    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:palette-v7:$supportVersion"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation("com.github.bumptech.glide:recyclerview-integration:$glideVersion") {
+        transitive = false
+    }
+
+    implementation "io.reactivex.rxjava3:rxjava:$rxAndroidVersion"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxAndroidVersion"
+    implementation "androidx.preference:preference-ktx:$preferencesVersion"
+
+    implementation "androidx.legacy:legacy-support-v4:$legacyVersion"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "androidx.viewpager2:viewpager2:$viewPagerVersion"
+
+    debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+jacoco {
+    toolVersion = "$jacocoVersion"
+    reportsDir = file("$buildDir/jacocoReport")
+}
+
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled = true
+    }
+
+    final fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', 'android/**/*.*']
+
+    final kotlinTree = fileTree(dir: "$buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
+    final javacTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: fileFilter)
+    final mainSrc = "$projectDir/src/main/java"
+
+    sourceDirectories.setFrom files([mainSrc])
+    classDirectories.setFrom files([kotlinTree, javacTree])
+    executionData.setFrom fileTree(dir: buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
+}

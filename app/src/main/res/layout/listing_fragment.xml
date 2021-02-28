@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.leapi.enjoei.view.ListingFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/listing_toolbar"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/background"/>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:indeterminate="true"
+        android:contentDescription="@string/loading"
+        app:showAnimationBehavior="inward"
+        app:indeterminateAnimationType="disjoint"
+        app:trackThickness="4dp"
+        app:indicatorColor="@color/font_color"
+        app:trackColor="@color/font_light_color"
+        android:layout_below="@+id/listing_toolbar"
+        app:trackCornerRadius="0dp"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#FFFFFFFF</color>
+    <color name="font_color">#333333</color>
+    <color name="font2_color">#222222</color>
+    <color name="font_light_color">#908E8B</color>
+    <color name="font_light2_color">#7D7A77</color>
+    <color name="highlight_color">#F05B78</color>
+    <color name="logo_dark_color">#4F2D32</color>
+    <color name="light_border_color">#F4F2F0</color>
+</resources>
