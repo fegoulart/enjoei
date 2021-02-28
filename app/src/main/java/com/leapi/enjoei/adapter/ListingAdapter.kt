@@ -13,7 +13,7 @@ import com.leapi.enjoei.view.ListingAdClickListener
 
 class ListingAdapter(
     private val adsList: ArrayList<SearchEdge>,
-    itemClickListener: ListingAdClickListener
+    private val itemClickListener: ListingAdClickListener
 ) : RecyclerView.Adapter<ListingAdapter.ListingAdViewHolder>() {
 
     fun updateAds(newAdsList: List<SearchEdge>) {
@@ -24,7 +24,7 @@ class ListingAdapter(
 
     class ListingAdViewHolder(
         private val itemBinding: ListingAdCellBinding,
-        itemClickListener: ListingAdClickListener
+        private val itemClickListener: ListingAdClickListener
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(adItem: SearchEdge) {

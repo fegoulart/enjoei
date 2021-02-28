@@ -92,7 +92,7 @@ class ListingFragment : Fragment(), ListingAdClickListener {
     private fun inject() {
         if (!injected) {
             DaggerListingFragmentComponent.builder()
-                .listingAdapterModule(ListingAdapterModule(arrayListOf()),this)
+                .listingAdapterModule(ListingAdapterModule(arrayListOf(),this))
                 .build()
                 .inject(this)
             injected = true
