@@ -59,3 +59,16 @@ data class PriceData(
     val listed: Float,
     val sale: Float
 ): Parcelable
+
+@Keep
+@Parcelize
+data class StoreData(
+    val counters: StoreDataCounter
+): Parcelable
+
+@Keep
+@Parcelize
+data class StoreDataCounter(
+    val available_products: Long,
+    val sold_products: Long
+): Parcelable

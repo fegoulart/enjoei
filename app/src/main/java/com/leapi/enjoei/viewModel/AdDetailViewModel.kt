@@ -3,10 +3,7 @@ package com.leapi.enjoei.viewModel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.leapi.enjoei.di.viewModel.DaggerAdDetailViewModelComponent
-import com.leapi.enjoei.model.AdPricingData
-import com.leapi.enjoei.model.AdditionalAdData
-import com.leapi.enjoei.model.BasicAdData
-import com.leapi.enjoei.model.SearchEdge
+import com.leapi.enjoei.model.*
 import com.leapi.enjoei.service.EnjoeiApiService
 import com.leapi.enjoei.service.PagesApiService
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +18,7 @@ class AdDetailViewModel(application: Application) : BaseViewModel(application) {
     val basicAdData = MutableLiveData<BasicAdData>()
     val additionalAdData = MutableLiveData<AdditionalAdData>()
     val pricingAdData = MutableLiveData<AdPricingData>()
+    val storeCounters = MutableLiveData<StoreData>()
     val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     private var injected = false
@@ -82,6 +80,26 @@ class AdDetailViewModel(application: Application) : BaseViewModel(application) {
                 withContext(Dispatchers.Main) {
                     try {
                         pricingAdData.postValue(apiResponse)
+                    } catch (e: HttpException) {
+                        errorMessage.value = "HTTP Error"
+                    } catch (e: Throwable) {
+                        errorMessage.value = "Network Error"
+                    }
+                    loading.postValue(false)
+                }
+            }
+        }
+    }
+
+    fun getStoreCounters() {
+        inject()
+        basicAdData.value?.storeId?.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                loading.postValue(true)
+                val apiResponse = enjoeiApiService.getStoreCounters(it)
+                withContext(Dispatchers.Main) {
+                    try {
+                        storeCounters.postValue(apiResponse)
                     } catch (e: HttpException) {
                         errorMessage.value = "HTTP Error"
                     } catch (e: Throwable) {

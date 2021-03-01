@@ -11,14 +11,13 @@ import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment
 import com.leapi.enjoei.R
 import com.leapi.enjoei.databinding.AdDetailFragmentBinding
-import com.leapi.enjoei.databinding.ListingFragmentBinding
+import com.leapi.enjoei.di.util.fromHtml
 import com.leapi.enjoei.di.util.toBrazilianCurrency
 import com.leapi.enjoei.model.AdPricingData
 import com.leapi.enjoei.model.AdditionalAdData
 import com.leapi.enjoei.model.BasicAdData
-import com.leapi.enjoei.model.SearchEdge
+import com.leapi.enjoei.model.StoreData
 import com.leapi.enjoei.viewModel.AdDetailViewModel
-import com.leapi.enjoei.viewModel.ListingViewModel
 
 class AdDetailFragment : Fragment() {
 
@@ -34,6 +33,8 @@ class AdDetailFragment : Fragment() {
     lateinit var brandTextView: TextView
     lateinit var priceTextView: TextView
     lateinit var priceConditionsTextView: TextView
+    lateinit var availableItemsTextView: TextView
+    lateinit var soldItemsTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +70,8 @@ class AdDetailFragment : Fragment() {
         brandTextView = binding.brand
         priceTextView = binding.priceTextview
         priceConditionsTextView = binding.priceCondition
+        soldItemsTextView = binding.soldCount
+        availableItemsTextView = binding.availableCount
     }
 
     private fun setupBackButton() {
@@ -85,6 +88,7 @@ class AdDetailFragment : Fragment() {
                     updateBasicDataUI(it)
                     viewModel.getAdditionalData()
                     viewModel.getPricingInformation()
+                    viewModel.getStoreCounters()
                 }
             })
 
@@ -100,6 +104,14 @@ class AdDetailFragment : Fragment() {
             this.viewLifecycleOwner, { pricingData ->
                 pricingData?.let {
                     updatePricingDataUI(it)
+                }
+            }
+        )
+
+        viewModel.storeCounters.observe(
+            this.viewLifecycleOwner, { counters ->
+                counters?.let {
+                    updateStoreCountersUI(it)
                 }
             }
         )
@@ -121,7 +133,7 @@ class AdDetailFragment : Fragment() {
     }
 
     private fun updateAdditionalDataUI(additionalAdData: AdditionalAdData) {
-        adDescriptionTextView.text = additionalAdData.description
+        adDescriptionTextView.text = additionalAdData.description.fromHtml()
         when (additionalAdData.used) {
             true -> productConditionTextView.text = getString(R.string.usedProduct)
             false -> productConditionTextView.text = getString(R.string.newProduct)
@@ -139,6 +151,10 @@ class AdDetailFragment : Fragment() {
         priceConditionsTextView.text = pricingData.regular_price.values.price_subtitle
     }
 
+    private fun updateStoreCountersUI(storeData: StoreData) {
+        soldItemsTextView.text = storeData.counters.sold_products.toString()
+        availableItemsTextView.text = storeData.counters.available_products.toString()
+    }
 
     companion object {
         fun newInstance() = AdDetailFragment()
