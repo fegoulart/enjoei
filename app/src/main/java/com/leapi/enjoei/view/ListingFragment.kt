@@ -58,7 +58,6 @@ class ListingFragment : Fragment(), ListingAdClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         bindVisualComponents()
-        setupToolbar()
         inject()
         setupAdsRecyclerView()
         setupViewModel()
