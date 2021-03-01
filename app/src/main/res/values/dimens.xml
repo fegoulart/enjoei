@@ -3,4 +3,7 @@
     <dimen name="tabbar_height">70dp</dimen>
     <dimen name="ad_cell_height">100dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="vertical_related">4dp</dimen>
+    <dimen name="default_start_margin">20dp</dimen>
+    <dimen name="default_vertical_separation">20dp</dimen>
 </resources>

@@ -75,6 +75,7 @@ data class SearchSize(
 @Keep
 @Parcelize
 data class SearchStore(
+    val path: String,
     val displayable: SearchDisplayableStore
 ) : Parcelable
 

@@ -5,7 +5,6 @@ plugins {
     id 'kotlin-kapt'
     id 'jacoco'
     id 'androidx.navigation.safeargs.kotlin'
-
 }
 
 android {
@@ -33,20 +32,22 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BACKEND_URL", '"https://dev-api.checkoff.com.br/api/v1/"'
-            //https://enjusearch.enjoei.com.br/graphql-search-x?first=40&operation_name=searchProductsForStore&owner_id=7040410&query_id=0b085f0bd444d9a7e327e5a658194975&seller_id=10655653&term=
-            //https://enjusearch.enjoei.com.br/graphql-search-x?city=medianeira&experienced_seller=true&first=30&operation_name=searchProducts&query_id=c979e1f7f6478dabdf28c571789010d3&shipping_range=near_regions&state=pr&term=star-wars
-        }
-
-        debug {
-            testCoverageEnabled true
             buildConfigField "String", "SEARCH_URL", '"https://enjusearch.enjoei.com.br/"'
             buildConfigField "String", "IMAGE_URL", '"https://photos.enjoei.com.br/public/"'
             buildConfigField "String", "PRICING_URL", '"https://www.enjoei.com.br/api/v5/products/"'
             buildConfigField "String", "STORE_URL", '"https://www.enjoei.com.br/api/v3/stores/"'
+            buildConfigField "String", "PAGES_URL", '"https://pages.enjoei.com.br"'
+        }
 
+        debug {
+            testCoverageEnabled true
             debuggable true
 
+            buildConfigField "String", "SEARCH_URL", '"https://enjusearch.enjoei.com.br/"'
+            buildConfigField "String", "IMAGE_URL", '"https://photos.enjoei.com.br/public/"'
+            buildConfigField "String", "PRICING_URL", '"https://www.enjoei.com.br/api/v5/products/"'
+            buildConfigField "String", "STORE_URL", '"https://www.enjoei.com.br/api/v3/stores/"'
+            buildConfigField "String", "PAGES_URL", '"https://pages.enjoei.com.br/"'
         }
     }
     compileOptions {

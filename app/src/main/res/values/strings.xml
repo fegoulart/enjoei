@@ -5,4 +5,7 @@
     <string name="available">à venda</string>
     <string name="sold">vendidos</string>
     <string name="back">voltar</string>
+    <string name="newProduct">novo</string>
+    <string name="usedProduct">usado</string>
+    <string name="brand">marca</string>
 </resources>
