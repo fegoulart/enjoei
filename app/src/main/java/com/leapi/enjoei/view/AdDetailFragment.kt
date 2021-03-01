@@ -12,6 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.leapi.enjoei.R
 import com.leapi.enjoei.databinding.AdDetailFragmentBinding
 import com.leapi.enjoei.databinding.ListingFragmentBinding
+import com.leapi.enjoei.di.util.toBrazilianCurrency
+import com.leapi.enjoei.model.AdPricingData
 import com.leapi.enjoei.model.AdditionalAdData
 import com.leapi.enjoei.model.BasicAdData
 import com.leapi.enjoei.model.SearchEdge
@@ -30,6 +32,8 @@ class AdDetailFragment : Fragment() {
     lateinit var adDescriptionTextView: TextView
     lateinit var productConditionTextView: TextView
     lateinit var brandTextView: TextView
+    lateinit var priceTextView: TextView
+    lateinit var priceConditionsTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +67,8 @@ class AdDetailFragment : Fragment() {
         adDescriptionTextView = binding.description
         productConditionTextView = binding.condition
         brandTextView = binding.brand
+        priceTextView = binding.priceTextview
+        priceConditionsTextView = binding.priceCondition
     }
 
     private fun setupBackButton() {
@@ -78,6 +84,7 @@ class AdDetailFragment : Fragment() {
                 basicAdData?.let {
                     updateBasicDataUI(it)
                     viewModel.getAdditionalData()
+                    viewModel.getPricingInformation()
                 }
             })
 
@@ -88,6 +95,14 @@ class AdDetailFragment : Fragment() {
                 }
             }
         )
+
+        viewModel.pricingAdData.observe(
+            this.viewLifecycleOwner, { pricingData ->
+                pricingData?.let {
+                    updatePricingDataUI(it)
+                }
+            }
+        )
     }
 
     private fun setupViewModel() {
@@ -95,7 +110,7 @@ class AdDetailFragment : Fragment() {
     }
 
     private fun updateBasicDataUI(basicAdData: BasicAdData) {
-        adTitleTextView.text  = basicAdData.adTitle
+        adTitleTextView.text = basicAdData.adTitle
         storeNameTextView.text = basicAdData.storeName
         if (basicAdData.brand.isNotEmpty()) {
             brandTextView.text = basicAdData.brand
@@ -111,6 +126,17 @@ class AdDetailFragment : Fragment() {
             true -> productConditionTextView.text = getString(R.string.usedProduct)
             false -> productConditionTextView.text = getString(R.string.newProduct)
         }
+    }
+
+    private fun updatePricingDataUI(pricingData: AdPricingData) {
+        if (pricingData.regular_price.values.price.sale > 0) {
+            val salePrice = pricingData.regular_price.values.price.sale.toBrazilianCurrency()
+            priceTextView.text = salePrice
+        } else {
+            val listedPrice = pricingData.regular_price.values.price.listed.toBrazilianCurrency()
+            priceTextView.text = listedPrice
+        }
+        priceConditionsTextView.text = pricingData.regular_price.values.price_subtitle
     }
 
 

@@ -25,10 +25,37 @@ data class AdditionalAdData(
     val brand: ProductBrand,
     val photos: List<String>,
     val seller_id: Long
-): Parcelable
+) : Parcelable
 
 @Keep
 @Parcelize
 data class ProductBrand(
     val name: String
+) : Parcelable
+
+@Keep
+@Parcelize
+data class AdPricingData(
+    val id: Long,
+    val regular_price: RegularPrice
+) : Parcelable
+
+@Keep
+@Parcelize
+data class RegularPrice(
+    val values: RegularPriceValues
+): Parcelable
+
+@Keep
+@Parcelize
+data class RegularPriceValues(
+    val price_subtitle: String,
+    val price: PriceData
+): Parcelable
+
+@Keep
+@Parcelize
+data class PriceData(
+    val listed: Float,
+    val sale: Float
 ): Parcelable

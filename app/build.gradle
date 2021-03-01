@@ -34,8 +34,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "SEARCH_URL", '"https://enjusearch.enjoei.com.br/"'
             buildConfigField "String", "IMAGE_URL", '"https://photos.enjoei.com.br/public/"'
-            buildConfigField "String", "PRICING_URL", '"https://www.enjoei.com.br/api/v5/products/"'
-            buildConfigField "String", "STORE_URL", '"https://www.enjoei.com.br/api/v3/stores/"'
+            buildConfigField "String", "DEFAULT_URL", '"https://www.enjoei.com.br/api/v5/products/"'
             buildConfigField "String", "PAGES_URL", '"https://pages.enjoei.com.br"'
         }
 
@@ -45,8 +44,8 @@ android {
 
             buildConfigField "String", "SEARCH_URL", '"https://enjusearch.enjoei.com.br/"'
             buildConfigField "String", "IMAGE_URL", '"https://photos.enjoei.com.br/public/"'
-            buildConfigField "String", "PRICING_URL", '"https://www.enjoei.com.br/api/v5/products/"'
-            buildConfigField "String", "STORE_URL", '"https://www.enjoei.com.br/api/v3/stores/"'
+            buildConfigField "String", "DEFAULT_URL", '"https://www.enjoei.com.br/"'
+            //buildConfigField "String", "STORE_URL", '"https://www.enjoei.com.br/api/v3/stores/"'
             buildConfigField "String", "PAGES_URL", '"https://pages.enjoei.com.br/"'
         }
     }

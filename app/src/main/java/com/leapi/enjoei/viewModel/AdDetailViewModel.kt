@@ -3,9 +3,11 @@ package com.leapi.enjoei.viewModel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.leapi.enjoei.di.viewModel.DaggerAdDetailViewModelComponent
+import com.leapi.enjoei.model.AdPricingData
 import com.leapi.enjoei.model.AdditionalAdData
 import com.leapi.enjoei.model.BasicAdData
 import com.leapi.enjoei.model.SearchEdge
+import com.leapi.enjoei.service.EnjoeiApiService
 import com.leapi.enjoei.service.PagesApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,12 +20,16 @@ class AdDetailViewModel(application: Application) : BaseViewModel(application) {
 
     val basicAdData = MutableLiveData<BasicAdData>()
     val additionalAdData = MutableLiveData<AdditionalAdData>()
+    val pricingAdData = MutableLiveData<AdPricingData>()
     val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     private var injected = false
 
     @Inject
     lateinit var pagesApiService: PagesApiService
+
+    @Inject
+    lateinit var enjoeiApiService: EnjoeiApiService
 
     fun inject() {
         if (!injected) {
@@ -56,6 +62,26 @@ class AdDetailViewModel(application: Application) : BaseViewModel(application) {
                 withContext(Dispatchers.Main) {
                     try {
                         additionalAdData.postValue(apiResponse)
+                    } catch (e: HttpException) {
+                        errorMessage.value = "HTTP Error"
+                    } catch (e: Throwable) {
+                        errorMessage.value = "Network Error"
+                    }
+                    loading.postValue(false)
+                }
+            }
+        }
+    }
+
+    fun getPricingInformation() {
+        inject()
+        basicAdData.value?.adId?.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                loading.postValue(true)
+                val apiResponse = enjoeiApiService.getPricingInformation(it)
+                withContext(Dispatchers.Main) {
+                    try {
+                        pricingAdData.postValue(apiResponse)
                     } catch (e: HttpException) {
                         errorMessage.value = "HTTP Error"
                     } catch (e: Throwable) {
