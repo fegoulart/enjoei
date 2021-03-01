@@ -79,17 +79,6 @@ class ListingFragment : Fragment(), ListingAdClickListener {
         adsRecyclerView = binding.listingRecyclerView
     }
 
-    private fun setupToolbar() {
-        //FIXME Implement toolbar
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.listingFragment
-//            )
-//        )
-//        val navHostFragment = NavHostFragment.findNavController(this);
-//        NavigationUI.setupWithNavController(toolbar, navHostFragment, appBarConfiguration)
-    }
-
     private fun inject() {
         if (!injected) {
             DaggerListingFragmentComponent.builder()
